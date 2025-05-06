@@ -351,7 +351,7 @@ class ParamikoMachine(BaseRemoteMachine):
         if isinstance(dst, RemotePath):
             raise TypeError(f"dst of download cannot be {dst!r}")
         return self._download(
-            src if isinstance(src, RemotePath) else self.path_from_parts(src),
+            src if isinstance(src, RemotePath) else self.path(src),
             dst if isinstance(dst, LocalPath) else LocalPath(dst),
         )
 
@@ -375,7 +375,7 @@ class ParamikoMachine(BaseRemoteMachine):
             raise TypeError(f"dst {dst!r} points to a different remote machine")
         return self._upload(
             src if isinstance(src, LocalPath) else LocalPath(src),
-            dst if isinstance(dst, RemotePath) else self.path_from_parts(dst),
+            dst if isinstance(dst, RemotePath) else self.path(dst),
         )
 
     def _upload(self, src, dst):
