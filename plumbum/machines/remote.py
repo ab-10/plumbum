@@ -38,7 +38,7 @@ class RemoteEnv(BaseEnv):
                 if run[0] == 0 and run[1].rstrip("\n") and not run[2]
             }
 
-        super().__init__(remote.path_from_parts, ":", _curr=_curr)
+        super().__init__(remote.path, ":", _curr=_curr)
         self.remote = remote
         self._orig = self._curr.copy()
 
@@ -206,7 +206,7 @@ class BaseRemoteMachine(BaseMachine):
         self._session.close()
         self._session = ClosedRemote(self)
 
-    def path_from_parts(self, *parts):
+    def path(self, *parts):
         """A factory for :class:`RemotePaths <plumbum.path.remote.RemotePath>`.
         Usage: ``p = rem.path("/usr", "lib", "python2.7")``
         """
@@ -263,7 +263,7 @@ class BaseRemoteMachine(BaseMachine):
 
         if not isinstance(cmd, LocalPath):
             return self.RemoteCommand(
-                self, self.path_from_parts(cmd) if "/" in cmd or "\\" in cmd else self.which(cmd)
+                self, self.path(cmd) if "/" in cmd or "\\" in cmd else self.which(cmd)
             )
 
         raise TypeError(f"cmd must not be a LocalPath: {cmd!r}")
@@ -330,7 +330,7 @@ class BaseRemoteMachine(BaseMachine):
         _, out, _ = self._session.run(
             "mktemp -d 2>/dev/null || mktemp -d tmp.XXXXXXXXXX"
         )
-        local_dir = self.path_from_parts(out.strip())
+        local_dir = self.path(out.strip())
         try:
             yield local_dir
         finally:
