@@ -411,7 +411,7 @@ class FindNearest:
         )
         return n + 232
 
-    def all_fast(self) -> int:
+    def all(self) -> int:
         """Runs roughly 8 times faster than the slow version."""
         colors = [self.only_simple(), self.only_colorblock(), self.only_grey()]
         distances = [self._distance_to_color_number(n) for n in colors]
