@@ -171,7 +171,7 @@ class Color:
         elif self.representation == 2:
             number = FindNearest(*self.rgb).only_simple()
         elif self.representation in (3, 4):
-            number = FindNearest(*self.rgb).all_fast()
+            number = FindNearest(*self.rgb).all()
         else:
             raise AssertionError("Invalid representation, needs to be 0-4")
 

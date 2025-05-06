@@ -13,16 +13,16 @@ from plumbum.colorlib.styles import (  # noqa: F401
 
 class TestNearestColor:
     def test_exact(self):
-        assert FindNearest(0, 0, 0).all_fast() == 0
+        assert FindNearest(0, 0, 0).all() == 0
         for n, color in enumerate(color_html):
             # Ignoring duplicates
             if n not in (16, 21, 46, 51, 196, 201, 226, 231, 244):
                 rgb = (int(color[1:3], 16), int(color[3:5], 16), int(color[5:7], 16))
-                assert FindNearest(*rgb).all_fast() == n
+                assert FindNearest(*rgb).all() == n
 
     def test_nearby(self):
-        assert FindNearest(1, 2, 2).all_fast() == 0
-        assert FindNearest(7, 7, 9).all_fast() == 232
+        assert FindNearest(1, 2, 2).all() == 0
+        assert FindNearest(7, 7, 9).all() == 232
 
     def test_simplecolor(self):
         assert FindNearest(1, 2, 4).only_basic() == 0
@@ -91,4 +91,4 @@ class TestNearestColorAgain:
             for g in myrange:
                 for b in myrange:
                     near = FindNearest(r, g, b)
-                    assert near.all_slow() == near.all_fast(), f"Tested: {r}, {g}, {b}"
+                    assert near.all_slow() == near.all(), f"Tested: {r}, {g}, {b}"
